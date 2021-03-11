@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
+from pandas import DataFrame, ExcelWriter
+import pandas as pd
 
 def main():
     name_of_animal_and_count_of_metrs = {}
@@ -21,12 +23,22 @@ def main():
                     actions.move_to_element(elem[i]).perform()
                     name_of_animal_and_count_of_metrs.update({elem[i].text: m.text})
 
+    for key, val in  name_of_animal_and_count_of_metrs.items():
+       if val == '':
+           name_of_animal_and_count_of_metrs.update({key : 2})
+       else:
+           val_new = val.replace(' METERS DEEP', '')
+           name_of_animal_and_count_of_metrs.update({key: int(val_new) + 12})
+
+    name_of_animal_and_count_of_metrs.update({'MANATEE': 6})
 
 
-    print(name_of_animal_and_count_of_metrs)
-    print(len(name_of_animal_and_count_of_metrs))
+#    df = pd.DataFrame(data = name_of_animal_and_count_of_metrs,index = [0])
+#    df = (df.T)
+#    df.to_excel('C:/Users/tatyana.vedernikova/Desktop/New/file111.xlsx')
 
-
+    for key, val in  name_of_animal_and_count_of_metrs.items():
+        print(key, '   ', val)
 
 
 
